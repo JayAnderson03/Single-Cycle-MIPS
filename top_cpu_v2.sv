@@ -1,4 +1,4 @@
-module top_cpu_v2
+module top_cpu
 ();
 
   logic clk;
@@ -8,7 +8,6 @@ module top_cpu_v2
   cpu_v2 CPU ( .clk(clk), .rst(rst), .halt(halt)  );
 
 
-    // A clock for sequencing
     initial begin
         clk = 1'b0 ;
         while(1) begin
@@ -18,13 +17,10 @@ module top_cpu_v2
     end
 
 
-   //
-   // How long should our test run
-   // this is our failsafe end to catch run-away programs
-   //
+
    initial begin
-      repeat(100) @(posedge clk) ; // 100 positive edges
-      $finish(1) ; // Note that the input is an error state
+      repeat(100) @(posedge clk) ; 
+      $finish(1) ; 
    end
 
 
@@ -35,10 +31,6 @@ module top_cpu_v2
     end
    end
 
-
-    //
-    // Write some display to help us with debug
-    //
 
     parameter prtdbg=0;
     always @(posedge clk ) begin
@@ -59,8 +51,7 @@ module top_cpu_v2
 
     always @(posedge clk) begin
       #4
-      // note that depending on your implementation, these registers
-      // might appear 1 clock after the instruction executes.
+
 
       if (rst==1)
       begin
@@ -83,9 +74,7 @@ module top_cpu_v2
 
 
    int adr, val;
-  //
-  // Load memory while we reset the machine
-  //
+
   initial begin
 
     rst = 1'b0;
